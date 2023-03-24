@@ -25,3 +25,23 @@ def loading_effect(time):
   print("The process has been completed satisfactorily!")
 
 
+#CON ESO SALE LOS COLORES
+'''
+def estructuraDeColores():
+    for nombre, extension in estructura:
+        if extension == 'java':
+            imprimir('38;2;255;160;122', f"{nombre}.{extension}")
+        elif extension == 'xml':
+           imprimir('38;2;135;206;250', f"{nombre}.{extension}")
+        elif extension == 'gradle':
+            imprimir("33", f"{nombre}.{extension}")
+        elif extension == 'md':
+            imprimir("38;2;135;206;250", f"{nombre}.{extension}")
+        elif extension == 'ninguno':
+            imprimir("38;2;255;160;122", f"{nombre}.{extension}")
+        elif extension == 'gitignore':
+            imprimir("38;2;255;215;0", f"{nombre}.{extension}")
+
+    else:
+        imprimir('1;38;2;255;215;0', nombre + '/')
+'''

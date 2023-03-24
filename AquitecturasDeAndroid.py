@@ -3,10 +3,8 @@ import errno
 from libs.effects  import loading_effect #as effects
 from libs.effects  import imprimir
 
-#from colorama import Fore, init
-
 #path = input("Introduzca la direccion path del proyecto: ")
-
+path = "java/"
 
 '''
 imprimir("34", "Estructura de carpetas:")
@@ -53,7 +51,7 @@ imprimir("1;38;2;255;215;0", "│   │   │       └── values/")
 imprimir("38;2;135;206;250", "│   │   │           ├── colors.xml")
 '''
 
-estructura1 = [ 
+estructura = [ 
     ("MyApplication", None),
     ("├── app", None),
     ("│   ├── src", None),
@@ -108,110 +106,6 @@ estructura1 = [
     ("├── LICENSE", "ninguno"),
     ("└── ", "gitignore")
 ]
-
-estructura = [
-    ("│   │   │   │   ├── data", None),
-    ("│   │   │   │   │   ├── database", None),
-    ("│   │   │   │   │   │   └── MyDatabase", "java"),
-    ("│   │   │   │   │   ├── models", None),
-    ("│   │   │   │   │   │   ├── User", "java"),
-    ("│   │   │   │   │   │   └── Product", "java"),
-    ("│   │   │   │   │   └── repositories", None),
-    ("│   │   │   │   │       ├── UserRepository", "java"),
-    ("│   │   │   │   │       └── ProductRepository", "java"),
-    ("│   │   │   │   ├── di", None),
-    ("│   │   │   │   │   └── AppComponent", "java"),
-    ("│   │   │   │   ├── ui", None),
-    ("│   │   │   │   │   ├── activities", None),
-    ("│   │   │   │   │   │   ├── MainActivity", "java"),
-    ("│   │   │   │   │   │   └── ProductDetailActivity", "java"),
-    ("│   │   │   │   │   │   └── ProductAdapter", "java"),
-    ("│   │   │   │   │   ├── fragments", None),
-    ("│   │   │   │   │   │   ├── HomeFragment", "java"),
-    ("│   │   │   │   │   │   └── ProductFragment", "java"),
-    ("│   │   │   │   │   ├── viewmodels", None),
-    ("│   │   │   │   │   │   ├── UserViewModel", "java"),
-    ("│   │   │   │   │   │   └── ProductViewModel", "java"),
-    ("│   │   │   │   │   ├── dialogs", None),
-    ("│   │   │   │   │   │   ├── ConfirmDialog", "java"),
-    ("│   │   │   │   │   │   ├── OnProductClickListener", "java"),
-    ("│   │   │   │   │   │   └── OnUserClickListener", "java"),
-    ("│   │   │   │   └── utils", None),
-    ("│   │   │   │   │       └── ImageUtils", "java"),
-    ("│   │   │   │   └── MyApplication", "java")
-]
-
-ruta_base = "java/"
-
-ruta_archivos_padres = [
-    ("data", None),
-    ("di", None),
-    ("ui", None),
-    ("utils", None)
-    #("MyApplication", None)
-]
-
-ruta_archivos_padre_data = [
-    ("database", None),
-    ("MyDatabase", "java"),
-    ("models", None),
-    ("User", "java"),
-    ("Product", "java"),
-    ("repositories", None),
-    ("UserRepository", "java"),
-    ("ProductRepository", "java")
-]
-
-ruta_archivos_padre_di = [
-    ("AppComponent", "java")
-]
-
-ruta_archivos_padre_ui = [
-    ("activities", None),
-    ("fragments", None),
-    ("viewmodels", None),
-    ("dialogs", None)
-]
-
-ruta_archivos_padre_utils = [
-    ("ImageUtils", "java")
-]
-
-#ruta_archivos_hijo_data
-
-
-
-
-'''def createFileJava(path, file, ext):
-    file = open(path + file+ ext, "w")
-    file.write("package com.tinieblas.tokomegawa.ui.fragments;\n \n")
-    file.write("public class HomeFragment {\n")
-    file.write("}")
-    file.close()'''
-
-'''for nombre, extension in ruta_archivos_padres:
-    if extension:
-        # Crear archivo
-        with open(os.path.join(ruta_base, nombre + "." + extension), "w") as archivo:
-            archivo.write("Este es el contenido del archivo.")
-            print(ruta_base)
-            print(nombre)
-            print(extension)
-            print("Done.")
-    else:
-        # Crear carpeta
-        if not os.path.exists(os.path.join(ruta_base, nombre)):
-            # Si no existe, crearla
-            os.makedirs(os.path.join(ruta_base, nombre))
-        else:
-            print("La carpeta ya existe.")
-
-        #createFileJava(ruta_base, nombre, extension)
-        #with open(os.path.join(ruta_base, "MyAplication" + "." + extension), "w"):
-            #archivo.write("Este es el contenido del archivo.")
-'''
-
-
 ruta_archivos = [
     ("data/", None),
     ("data/database", None),
@@ -244,8 +138,24 @@ ruta_archivos = [
     ("MyApplication", "java")
 ]
 
-# Se crea la carpeta base
-#os.makedirs(ruta_base, exist_ok=True)
+def estructuraDeColores():
+    for nombre, extension in estructura:
+        if extension == 'java':
+            imprimir('38;2;255;160;122', f"{nombre}.{extension}")
+        elif extension == 'xml':
+           imprimir('38;2;135;206;250', f"{nombre}.{extension}")
+        elif extension == 'gradle':
+            imprimir("33", f"{nombre}.{extension}")
+        elif extension == 'md':
+            imprimir("38;2;135;206;250", f"{nombre}.{extension}")
+        elif extension == 'ninguno':
+            imprimir("38;2;255;160;122", f"{nombre}.{extension}")
+        elif extension == 'gitignore':
+            imprimir("38;2;255;215;0", f"{nombre}.{extension}")
+
+    else:
+        imprimir('1;38;2;255;215;0', nombre + '/')
+
 
 # Ruta base donde se crearan los archivos y carpetas
 path = "java/"
@@ -272,108 +182,15 @@ for folder, extension in ruta_archivos:
             print(f"Se creó el archivo {file_path}")
 
 
-
-
-
-'''for nombre, extension in ruta_archivos_hijos:
-    
-    if not extension:
-        # Crear carpeta
-        os.makedirs(os.path.join(ruta_base, nombre), exist_ok=True)
-        #if not os.path.exists(os.path.join(path_completo)):
-            # Si no existe, crearla
-            #  print(path_completo)
-        print("Crear carpeta")
-            
-
-    else:
-        # Crear carpeta
-        path_completo = ruta_base + nombre
-        print("Crear archivo")
-        #'''
-
-
-'''for nombre, extension in ruta_archivos_hijos:
-    path_completo = ruta_base + nombre + str(extension)
-    if extension:
-        # Crear archivo
-        with open(os.path.join(path_completo, nombre + "." + extension), "w") as archivo:
-            print(path_completo)
-            #archivo.write("Este es el contenido del archivo.")
-            print("Crear archivo")
-          #  print(ruta_base + nombre + extension)
-           # print("Done.")
-    else:
-        # Crear carpeta
-        if not os.path.exists(os.path.join(path_completo)):
-            # Si no existe, crearla
-            print(path_completo)
-            print("Crear carpeta")
-            #os.makedirs(os.path.join(path_completo, nombre))
-        else:
-            print(ruta_base + nombre)
-            print("La carpeta ya existe.")'''
-
-        #createFileJava(ruta_base, nombre, extension)
-        #with open(os.path.join(ruta_base, "MyAplication" + "." + extension), "w"):
-            #archivo.write("Este es el contenido del archivo.")
-
-
-'''
-CON ESO SALE LOS COLORES
----
-for nombre, extension in estructura:
-    if extension == 'java':
-        imprimir('38;2;255;160;122', f"{nombre}.{extension}")
-    elif extension == 'xml':
-        imprimir('38;2;135;206;250', f"{nombre}.{extension}")
-    elif extension == 'gradle':
-        imprimir("33", f"{nombre}.{extension}")
-    elif extension == 'md':
-        imprimir("38;2;135;206;250", f"{nombre}.{extension}")
-    elif extension == 'ninguno':
-        imprimir("38;2;255;160;122", f"{nombre}.{extension}")
-    elif extension == 'gitignore':
-        imprimir("38;2;255;215;0", f"{nombre}.{extension}")
-
-    else:
-        imprimir('1;38;2;255;215;0', nombre + '/')'''
-
-
-
-
 #loading_effect(100)
-'''try:
-    path = os.makedirs('data/database')
-    path = os.makedirs('data/models')
-    path = os.makedirs('di/repositories')
-    path = os.makedirs('data/repositories')
-    path = os.makedirs('data/repositories')
-    path = os.makedirs('data/repositories')
-    path = os.makedirs('data/repositories')
-
-
-except OSError as e:
-   if e.errno != errno.EEXIST:
-       raise
-'''
-
-#try:
 
 '''createFileJava("data/models", "User", ".java")'''
-
-#os.mkdir('dir2')
-#os.mkdir('dir3')
-#os.mkdir('dir4')
-    #print(path)
-#except OSError as e:
- #   if e.errno != errno.EEXIST:
-  #      raise
-
-#package com.tinieblas.tokomegawa.ui.fragments;
-
-#public class HomeFragment {
-#}
+'''def createFileJava(path, file, ext):
+    file = open(path + file+ ext, "w")
+    file.write("package com.tinieblas.tokomegawa.ui.fragments;\n \n")
+    file.write("public class HomeFragment {\n")
+    file.write("}")
+    file.close()'''
 
 
 
