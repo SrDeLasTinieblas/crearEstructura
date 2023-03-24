@@ -1,4 +1,4 @@
-import os, sys, time
+import os, sys, time, re
 import errno
 from libs.effects  import loading_effect #as effects
 from libs.effects  import imprimir
@@ -53,7 +53,7 @@ imprimir("1;38;2;255;215;0", "│   │   │       └── values/")
 imprimir("38;2;135;206;250", "│   │   │           ├── colors.xml")
 '''
 
-estructura = [ 
+estructura1 = [ 
     ("MyApplication", None),
     ("├── app", None),
     ("│   ├── src", None),
@@ -109,22 +109,78 @@ estructura = [
     ("└── ", "gitignore")
 ]
 
+estructura = [
+    ("│   │   │   │   ├── data", None),
+    ("│   │   │   │   │   ├── database", None),
+    ("│   │   │   │   │   │   └── MyDatabase", "java"),
+    ("│   │   │   │   │   ├── models", None),
+    ("│   │   │   │   │   │   ├── User", "java"),
+    ("│   │   │   │   │   │   └── Product", "java"),
+    ("│   │   │   │   │   └── repositories", None),
+    ("│   │   │   │   │       ├── UserRepository", "java"),
+    ("│   │   │   │   │       └── ProductRepository", "java"),
+    ("│   │   │   │   ├── di", None),
+    ("│   │   │   │   │   └── AppComponent", "java"),
+    ("│   │   │   │   ├── ui", None),
+    ("│   │   │   │   │   ├── activities", None),
+    ("│   │   │   │   │   │   ├── MainActivity", "java"),
+    ("│   │   │   │   │   │   └── ProductDetailActivity", "java"),
+    ("│   │   │   │   │   │   └── ProductAdapter", "java"),
+    ("│   │   │   │   │   ├── fragments", None),
+    ("│   │   │   │   │   │   ├── HomeFragment", "java"),
+    ("│   │   │   │   │   │   └── ProductFragment", "java"),
+    ("│   │   │   │   │   ├── viewmodels", None),
+    ("│   │   │   │   │   │   ├── UserViewModel", "java"),
+    ("│   │   │   │   │   │   └── ProductViewModel", "java"),
+    ("│   │   │   │   │   ├── dialogs", None),
+    ("│   │   │   │   │   │   ├── ConfirmDialog", "java"),
+    ("│   │   │   │   │   │   ├── OnProductClickListener", "java"),
+    ("│   │   │   │   │   │   └── OnUserClickListener", "java"),
+    ("│   │   │   │   └── utils", None),
+    ("│   │   │   │   │       └── ImageUtils", "java"),
+    ("│   │   │   │   └── MyApplication", "java")
+]
+
+ruta_base = "java/"
 
 ruta_archivos_padres = [
     ("data", None),
     ("di", None),
     ("ui", None),
-    ("utils", None),
-    ("MyApplication", "java")
+    ("utils", None)
+    #("MyApplication", None)
 ]
 
-ruta_archivos_hijos = [
-    ("data", None),
+ruta_archivos_padre_data = [
     ("database", None),
-    ("MyDatabase", "java")
+    ("MyDatabase", "java"),
+    ("models", None),
+    ("User", "java"),
+    ("Product", "java"),
+    ("repositories", None),
+    ("UserRepository", "java"),
+    ("ProductRepository", "java")
 ]
 
-ruta_base = "java/"
+ruta_archivos_padre_di = [
+    ("AppComponent", "java")
+]
+
+ruta_archivos_padre_ui = [
+    ("activities", None),
+    ("fragments", None),
+    ("viewmodels", None),
+    ("dialogs", None)
+]
+
+ruta_archivos_padre_utils = [
+    ("ImageUtils", "java")
+]
+
+#ruta_archivos_hijo_data
+
+
+
 
 '''def createFileJava(path, file, ext):
     file = open(path + file+ ext, "w")
@@ -155,23 +211,65 @@ ruta_base = "java/"
             #archivo.write("Este es el contenido del archivo.")
 '''
 
-ruta_base = "java/"
+
+ruta_archivos = [
+    ("data/", None),
+    ("data/database", None),
+    ("data/database/MyDatabase", "java"),
+    ("data/models", None),
+    ("data/models/User", "java"),
+    ("data/models/Product", "java"),
+    ("data/repositories", None),
+    ("data/repositories/UserRepository", "java"),
+    ("data/repositories/ProductRepository", "java"),
+    ("di/", None),
+    ("di/AppComponent", "java"),
+    ("ui/", None),
+    ("ui/activities", None),
+    ("ui/activities/MainActivity", "java"),
+    ("ui/activities/ProductDetailActivity", "java"),
+    ("ui/activities/ProductAdapter", "java"),
+    ("ui/fragments", None),
+    ("ui/fragments/HomeFragment", "java"),
+    ("ui/fragments/ProductFragment", "java"),
+    ("ui/viewmodels", None),
+    ("ui/viewmodels/UserViewModel", "java"),
+    ("ui/viewmodels/ProductViewModel", "java"),
+    ("ui/dialogs", None),
+    ("ui/dialogs/ConfirmDialog", "java"),
+    ("ui/dialogs/OnProductClickListener", "java"),
+    ("ui/dialogs/OnUserClickListener", "java"),
+    ("utils/", None),
+    ("utils/ImageUtils", "java"),
+    ("MyApplication", "java")
+]
 
 # Se crea la carpeta base
-os.makedirs(ruta_base, exist_ok=True)
+#os.makedirs(ruta_base, exist_ok=True)
 
-# Se recorre la lista y se crean las carpetas y archivos correspondientes
-ruta_actual = ruta_base
-for nombre, extension in ruta_archivos_hijos:
-    # Se verifica si es una carpeta
-    if extension is None:
-        ruta_actual = os.path.join(ruta_actual, nombre)
-        os.makedirs(ruta_actual, exist_ok=True)
-    # Si no es una carpeta, se asume que es un archivo
+# Ruta base donde se crearan los archivos y carpetas
+path = "java/"
+
+for folder, extension in ruta_archivos:
+    folder_path = os.path.join(path, folder)
+    
+    # Verificar si la carpeta ya existe
+    if os.path.isdir(folder_path):
+        print(f"La carpeta {folder_path} ya existe")
     else:
-        ruta_archivo = os.path.join(ruta_actual, nombre + "." + extension)
-        with open(ruta_archivo, "w") as archivo:
-            pass # Aquí se podría escribir el contenido del archivo si se desea
+        os.makedirs(folder_path)
+        print(f"Se creó la carpeta {folder_path}")
+    
+    # Crear archivo si se especificó una extensión
+    if extension:
+        file_path = os.path.join(folder_path, folder.split("/")[-1] + "." + extension)
+        
+        # Verificar si el archivo ya existe
+        if os.path.isfile(file_path):
+            print(f"El archivo {file_path} ya existe")
+        else:
+            open(file_path, "w").close()
+            print(f"Se creó el archivo {file_path}")
 
 
 
